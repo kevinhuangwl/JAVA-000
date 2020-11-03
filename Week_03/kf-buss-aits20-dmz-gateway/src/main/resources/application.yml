@@ -1,0 +1,48 @@
+#WEB服务端口(默认8080,若使用war包部署，则此属性无效)
+server.port: 12380
+
+log:
+  # 日志文件名称前缀
+  name: gdtax.dmz.gateway
+  #日志文件保存路径
+  path: log/JMSAdapter/
+  #日志文件保存时长(单位：天)
+  history: 30
+  #日志输出到控制台的编码(部署到Tomcat时需改成GBK编码，开发环境或部署到weblogic下则使用UTF-8)
+  console.charset: UTF-8
+  #日志是否记录请求及响应信息(默认不打开，建议在开发阶段、测试阶段、排查错误阶段打开此开关以协助排查)
+  record.request: true
+  #上传用户操作记录间隔，单位：毫秒(默认10000，  当设置为0时则实时上传;设置为-1则不上传操作记录，建议设置为10000以上)
+  operation.upload.interval: 10000
+  level: INFO
+ 
+
+# 路由列表
+server-list:
+  server[0]: 
+    path: /admin/
+    target: http://86.12.73.175:18080
+  server[1]:
+    path: /cloud/
+    target: http://86.12.73.175:8081
+  server[2]:
+    path: /cmd/
+    target: http://127.0.0.1:3100
+  server[3]:
+    path: /dispatch/
+    target: http://86.12.73.175:18060
+  server[4]:
+    path: /file/
+    target: http://86.12.73.176:8090
+  server[5]:
+    path: /smart/
+    target: http://86.12.73.175:18088
+  server[6]:
+    path: /log/
+    target: http://86.12.73.175:9999
+  server[7]:
+    path: /buss/
+    target: http://86.12.73.176:8080
+  server[8]:
+    path: /temp/
+    target: http://86.12.73.176:8080
