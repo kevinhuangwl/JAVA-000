@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                        http://www.springframework.org/schema/util 
+                        http://www.springframework.org/schema/util/spring-util.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+    
+    <!-- 简单对象 -->
+    <bean id="demo"  class="java.lang.String" >
+    	<constructor-arg type="java.lang.String" value="42"/>
+    </bean>
+    
+    <!-- 复杂对象 -->
+    <bean id="myObj" class="com.xuanwu.demo.MyObject">
+    	<property name="demo" ref="demo" />
+    	<property name="demoList" ref="demoList" />
+    </bean>
+    
+    <!-- 列表对象 -->
+    <util:list id="demoList">
+	    <value>pechorin@hero.org</value>
+	    <value>raskolnikov@slums.org</value>
+	    <value>stavrogin@gov.org</value>
+	    <value>porfiry@gov.org</value>
+	</util:list>
+	
+	<util:list id="myList">
+	    <bean id="obj1" class="com.xuanwu.demo.MyObject">
+	    	<property name="demo" ref="demo" />
+	    	<property name="demoList" ref="demoList" />
+	    </bean>
+	    <ref bean="myObj"/>
+	</util:list>
+	
+	
+    <!-- 字典对象 -->
+    <util:map id="emailsMap">
+	    <entry key="raskolnikov" value="raskolnikov@slums.org"/>
+	    <entry key="stavrogin" value="stavrogin@gov.org"/>
+	    <entry key="porfiry" value="porfiry@gov.org"/>
+	</util:map>
+	
+	<util:map id="myMap">
+	    <entry key="raskolnikov">
+	    	<ref bean="myObj"/>
+	    </entry>
+	</util:map>
+	
+    
+    <!-- 集合对象 -->
+    <util:set id="emailsSet">
+	    <value>pechorin@hero.org</value>
+	    <value>raskolnikov@slums.org</value>
+	    <value>stavrogin@gov.org</value>
+	    <value>porfiry@gov.org</value>
+	</util:set>
+    
+</beans>
