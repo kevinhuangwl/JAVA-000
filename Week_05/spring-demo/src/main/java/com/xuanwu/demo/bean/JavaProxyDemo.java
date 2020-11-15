@@ -1,4 +1,6 @@
-package com.xuanwu.demo;
+package com.xuanwu.demo.bean;
+
+import java.io.IOException;
 
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.support.PropertiesBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.EncodedResource;
 
@@ -17,12 +20,13 @@ import com.alibaba.fastjson.JSON;
 public class JavaProxyDemo {
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 //		byXml();
 //		byProperties();
 //		byBeanDefinitionBuilder();
 //		byAbstractBeanDefinition();
-		byAnnotation();
+//		byAnnotation();
+		byYaml();
 	}
 	
 	public static void byXml() {
@@ -46,7 +50,17 @@ public class JavaProxyDemo {
 		System.out.println(JSON.toJSONString(beanFactory.getBean("list")));
 	}
 
-	public static void byYaml() {
+	public static void byYaml() throws IOException {
+		EncodedResource encodedResource = new EncodedResource(new ClassPathResource("bean-config.yml"), "UTF-8");
+		YamlPropsSourceFactory factory = new YamlPropsSourceFactory();
+		PropertySource<?> ps = factory.createPropertySource("yaml", encodedResource);
+		
+		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+		ctx.getEnvironment().getPropertySources().addFirst(ps);
+		ctx.register(MyObject.class);
+		ctx.refresh();
+		System.out.println(JSON.toJSONString(ctx.getBean("myObject")));
+		ctx.close();
 		
 	}
 

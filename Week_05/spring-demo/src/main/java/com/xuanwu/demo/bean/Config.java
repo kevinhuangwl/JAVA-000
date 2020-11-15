@@ -1,4 +1,4 @@
-package com.xuanwu.demo;
+package com.xuanwu.demo.bean;
 
 import java.util.Arrays;
 
