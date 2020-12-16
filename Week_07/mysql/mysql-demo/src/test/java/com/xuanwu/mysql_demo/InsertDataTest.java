@@ -37,7 +37,7 @@ public class InsertDataTest {
 			Connection conn = DriverManager.getConnection(url, user, password);
 			PreparedStatement ps = conn.prepareStatement("insert into t_order (code, state, user_id) values (?,?,?)");
 			Random r = new Random();
-			for(int j=0; j<100; j++) {				
+			for(int j=0; j<10; j++) {				
 				for(int i=0; i<100; i++) {
 					ps.setString(1, "KF" + Strings.padStart(String.valueOf(atmInt.incrementAndGet()), 10, '0'));
 					ps.setString(2, String.valueOf(r.nextInt(5)));
@@ -56,8 +56,8 @@ public class InsertDataTest {
 	
 	@Test
 	public void test() throws SQLException, InterruptedException {
-		cdl = new CountDownLatch(100);
-		for(int i=0; i<100; i++) {			
+		cdl = new CountDownLatch(10);
+		for(int i=0; i<10; i++) {			
 			exec.execute(add10kOrder);
 		}
 		cdl.await();
