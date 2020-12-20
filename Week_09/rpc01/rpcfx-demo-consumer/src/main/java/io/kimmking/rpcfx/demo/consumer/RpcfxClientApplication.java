@@ -1,6 +1,5 @@
 package io.kimmking.rpcfx.demo.consumer;
 
-import io.kimmking.rpcfx.Aop;
 import io.kimmking.rpcfx.client.Rpcfx;
 import io.kimmking.rpcfx.demo.api.Order;
 import io.kimmking.rpcfx.demo.api.OrderService;
@@ -17,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @SpringBootApplication
 @ComponentScan("io.kimmking.rpcfx")
-public class RpcfxClientApplication implements CommandLineRunner{
+public class RpcfxClientApplication {
 
 	// 二方库
 	// 三方库 lib
@@ -25,24 +24,16 @@ public class RpcfxClientApplication implements CommandLineRunner{
 	//
 
 	public static void main(String[] args) {
-		SpringApplication.run(RpcfxClientApplication.class, args);
-	}
-	
-	@Bean
-	public Aop aop() {
-		return new Aop();
-	}
-	
-
-	@Override
-	public void run(String... args) throws Exception {
+		
 		UserService userService = Rpcfx.create(UserService.class, "http://localhost:8080/");
 		User user = userService.findById(1);
 		System.out.println("find user id=1 from server: " + user.getName());
 
 		OrderService orderService = Rpcfx.create(OrderService.class, "http://localhost:8080/");
 		Order order = orderService.findOrderById(1992129);
-		System.out.println(String.format("find order name=%s, amount=%f",order.getName(),order.getAmount()));		
+		System.out.println(String.format("find order name=%s, amount=%f",order.getName(),order.getAmount()));	
 	}
+	
+
 
 }
