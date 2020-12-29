@@ -79,7 +79,9 @@ public class NettyClient implements DisposableBean{
 			FullHttpResponse response = (FullHttpResponse) msg;
 			CompletableFuture<FullHttpResponse> future = futureMap.remove(ctx.channel());
         	future.complete(response);
-        	ctx.channel().close();
+        	ctx.channel().close().addListener((cf)->{
+        		System.out.println("channel关闭");
+        	});
 		}
 
 	}

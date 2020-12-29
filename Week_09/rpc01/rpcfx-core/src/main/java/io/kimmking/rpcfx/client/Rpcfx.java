@@ -88,5 +88,7 @@ public final class Rpcfx {
         return (T) enhancer.create();
     }
     
-
+    public static void stop() throws Exception {
+    	client.destroy();
+    }
 }

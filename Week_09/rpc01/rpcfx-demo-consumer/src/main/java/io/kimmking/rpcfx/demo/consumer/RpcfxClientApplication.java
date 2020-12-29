@@ -23,7 +23,7 @@ public class RpcfxClientApplication {
 	// nexus, userserivce -> userdao -> user
 	//
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
 		UserService userService = Rpcfx.create(UserService.class, "http://localhost:8080/");
 		User user = userService.findById(1);
@@ -32,6 +32,8 @@ public class RpcfxClientApplication {
 		OrderService orderService = Rpcfx.create(OrderService.class, "http://localhost:8080/");
 		Order order = orderService.findOrderById(1992129);
 		System.out.println(String.format("find order name=%s, amount=%f",order.getName(),order.getAmount()));	
+		
+		Rpcfx.stop();
 	}
 	
 
